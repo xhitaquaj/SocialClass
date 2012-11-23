@@ -17,13 +17,15 @@ public class SessionThread extends Thread
 	public void run()
 	{
 		System.out.println("New client accepted.");
+		System.out.println("IP Address: " + clientSocket.getInetAddress());
+		System.out.println("Port: " + clientSocket.getPort());
 		boolean connected = true;
-		
+
 		try
 		{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-			
+
 			writer.write("Welcome\n");
 			writer.flush();
 
@@ -33,9 +35,13 @@ public class SessionThread extends Thread
 				if (line == null)
 					connected = false;
 				else
+				{
 					System.out.println("Content: " + line);
+					writer.write(ProtocolManager.answer(line));
+					writer.flush();
+				}
 			}
-			
+
 			System.out.println("Client disconnected.");
 		}
 		catch (IOException e)

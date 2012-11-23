@@ -7,31 +7,45 @@ import java.net.Socket;
 public class Server extends Thread
 {
 	private ServerSocket socket;
-	
+	private int port;
+
 	public Server()
 	{
-		try
-		{
-			socket = new ServerSocket(4242);
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this(4242);
 	}
 	
+	public Server(int port)
+	{
+		boolean created = false;
+		int maxport = port + 42;
+		
+		while (!created && port < maxport) 
+		{
+			try
+			{	
+				socket = new ServerSocket(port);
+				created = true;
+			}
+			catch (IOException e)
+			{
+				port++;
+			}
+		}
+		
+		this.port = port;
+	}
+
 	@Override
 	public void run()
 	{
 		System.out.println("Server running...");
-		
+
 		try
 		{
 			Socket client;
 			SessionThread session;
-			
-			while(true)
+
+			while (true)
 			{
 				client = socket.accept();
 				session = new SessionThread(client);
@@ -43,5 +57,10 @@ public class Server extends Thread
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int getPort()
+	{
+		return port;
 	}
 }
