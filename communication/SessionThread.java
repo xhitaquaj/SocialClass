@@ -1,8 +1,9 @@
 package communication;
 
-import java.io.BufferedReader;
 import java.io.*;
 import java.net.Socket;
+
+import core.*;
 
 public class SessionThread extends Thread
 {
@@ -16,9 +17,10 @@ public class SessionThread extends Thread
 	@Override
 	public void run()
 	{
+		ProtocolManager pm = new ProtocolManager(new Node(clientSocket.getPort(), clientSocket.getInetAddress()));
 		System.out.println("New client accepted.");
-		System.out.println("IP Address: " + clientSocket.getInetAddress());
-		System.out.println("Port: " + clientSocket.getPort());
+		System.out.println("IP Address: " + pm.getNode().getIP());
+		System.out.println("Port: " + pm.getNode().getPort());
 		boolean connected = true;
 
 		try
@@ -36,8 +38,8 @@ public class SessionThread extends Thread
 					connected = false;
 				else
 				{
-					System.out.println("Content: " + line);
-					writer.write(ProtocolManager.answer(line));
+					System.out.println("Content" + clientSocket.getInetAddress() + ": " + line);
+					writer.write(pm.answer(line));
 					writer.flush();
 				}
 			}
