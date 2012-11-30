@@ -1,10 +1,14 @@
 package core;
 
 import java.util.Date;
+import java.io.*;
+import java.net.*;
 import java.util.LinkedList;
 
 public class Profile
 {
+	public static Profile mine;
+	
 	private String name;
 	private LinkedList<Thought> thoughts;
 	private LinkedList<Profile> friends;
@@ -14,6 +18,8 @@ public class Profile
 	{
 		this.name = name;
 		this.node = node;
+		this.friends = new LinkedList<Profile>();
+		this.thoughts = new LinkedList<Thought>();
 	}
 
 	public String getName()
@@ -67,9 +73,41 @@ public class Profile
 		int i = 0;
 		while (!b && i<friends.size())
 		{
-			b = (friends.get(i).getNode() == node);
+			System.out.println(i+" "+friends.size()+" "+friends.get(i).getNode().getIP()+" "+node.getIP().toString());
+			b = (friends.get(i).getNode().getIP() == node.getIP());
+			i++;
 		}
 		return b;
 	}
 	
+	public int isFriend(String name)
+	{
+		boolean b = false;
+		int i = 0;
+		while (!b && i<friends.size())
+		{
+			b = (friends.get(i).getName().equals(name));
+			i++;
+		}
+		return i;
+	}
+	
+	public void loadFriends(String path)
+	{
+		try{
+			InputStream ips=new FileInputStream(path); 
+			InputStreamReader ipsr=new InputStreamReader(ips);
+			BufferedReader br=new BufferedReader(ipsr);
+			String ligne;
+			while ((ligne=br.readLine())!=null){
+				Node n = new Node(InetAddress.getByName(ligne.split(":")[1]), Integer.parseInt(ligne.split(":")[2]));
+				Profile p = new Profile(ligne.split(":")[0], n);
+				addFriend(p);
+				}
+			br.close(); 
+		}		
+		catch (Exception e){
+			System.out.println(e.toString());
+		}
+	}
 }

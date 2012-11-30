@@ -8,19 +8,18 @@ public class Node
 
 	public Node()
 	{
-	try{
 		this.port = 4242;
+		try
+		{
 			this.ip = InetAddress.getLocalHost();
-	}
-	catch (UnknownHostException e)
-	{
-		return;
-	}
-		
+		}
+		catch (UnknownHostException e)
+		{
+		}
 	}
 	
 		
-	public Node(int prt, InetAddress addr)
+	public Node(InetAddress addr, int prt)
 	{
 		this.port = prt;
 		this.ip = addr;

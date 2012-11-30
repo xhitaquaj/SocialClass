@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import core.*;
-
 public class Server extends Thread
 {
 	private ServerSocket socket;

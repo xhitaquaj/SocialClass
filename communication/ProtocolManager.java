@@ -18,12 +18,22 @@ public class ProtocolManager
 
 	public String answer(String query)
 	{
-		if isFriends(this.myNode)
+//		if (Profile.mine.isFriend(this.myNode))
+		int numami = (Profile.mine.isFriend(query.split("§:§")[0]));
+		if(numami>-1)
 		{
-			if (query.equals("Who are you?"))
-				return "I am the Alpha and the Omega, the First and the Last, the Beginning and the End\n";
+			System.out.println(query.split("§:§")[1].split("!:!")[0]);
+			if (query.split("§:§")[1].split("!:!")[0].equals("th"))
+			{
+				Profile.mine.getFriends().get(numami).addTought(query.split("§:§")[1].split("!:!")[1]); //Bug de List, a controler plus tard.
+				return "Tout s'est bien passé.";
+			}
 			else
 				return "I don't understand sorry.\n";
+		}
+		else
+		{
+			return "T'ES PAS MON COPAIN.";
 		}
 	}
 }

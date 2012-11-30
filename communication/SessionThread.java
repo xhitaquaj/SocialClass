@@ -17,7 +17,7 @@ public class SessionThread extends Thread
 	@Override
 	public void run()
 	{
-		ProtocolManager pm = new ProtocolManager(new Node(clientSocket.getPort(), clientSocket.getInetAddress()));
+		ProtocolManager pm = new ProtocolManager(new Node(clientSocket.getInetAddress(), clientSocket.getPort()));
 		System.out.println("New client accepted.");
 		System.out.println("IP Address: " + pm.getNode().getIP());
 		System.out.println("Port: " + pm.getNode().getPort());
