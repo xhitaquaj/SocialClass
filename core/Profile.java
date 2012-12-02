@@ -26,18 +26,23 @@ public class Profile
 	{
 		return name;
 	}
+	
+	public String toString()
+	{
+		return name+", "+node.getIP();
+	}
 
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 	
-	public void addTought(String message)
+	public void addThought(String message)
 	{
 		thoughts.add(new Thought(message));
 	}
 	
-	public void addTought(String message, Date d)
+	public void addThought(String message, Date d)
 	{
 		thoughts.add(new Thought(message, d));
 	}
@@ -83,11 +88,11 @@ public class Profile
 	public int isFriend(String name)
 	{
 		boolean b = false;
-		int i = 0;
+		int i = -1;
 		while (!b && i<friends.size())
 		{
-			b = (friends.get(i).getName().equals(name));
 			i++;
+			b = (friends.get(i).getName().equals(name));
 		}
 		return i;
 	}
@@ -109,5 +114,10 @@ public class Profile
 		catch (Exception e){
 			System.out.println(e.toString());
 		}
+	}
+
+	public static void check(String str) {
+		System.out.println("Check "+str);
+		
 	}
 }

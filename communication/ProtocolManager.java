@@ -18,14 +18,13 @@ public class ProtocolManager
 
 	public String answer(String query)
 	{
-//		if (Profile.mine.isFriend(this.myNode))
 		int numami = (Profile.mine.isFriend(query.split("§:§")[0]));
 		if(numami>-1)
 		{
 			System.out.println(query.split("§:§")[1].split("!:!")[0]);
 			if (query.split("§:§")[1].split("!:!")[0].equals("th"))
 			{
-				Profile.mine.getFriends().get(numami).addTought(query.split("§:§")[1].split("!:!")[1]); //Bug de List, a controler plus tard.
+				Profile.mine.getFriends().get(numami).addThought(query.split("§:§")[1].split("!:!")[1]); //Bug de List, a controler plus tard.
 				return "Tout s'est bien passé.";
 			}
 			else

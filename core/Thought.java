@@ -17,4 +17,9 @@ public class Thought
 	{
 		this(content, new Date());
 	}
+	
+	public String toString()
+	{
+		return this.content;
+	}
 }
