@@ -1,7 +1,10 @@
 package communication;
 
 import java.io.*;
-import java.net.Socket;
+import java.net.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
+import java.util.*;
 
 import core.*;
 
@@ -25,26 +28,47 @@ public class SessionThread extends Thread
 
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+			ServerSocketChannel ssc = ServerSocketChannel.open();
+			ServerSocket server = ssc.socket();
+			Selector selector = Selector.open();
 
-			writer.write("Welcome\n");
-			writer.flush();
+			server.bind(new InetSocketAddress(5234));
+			ssc.configureBlocking(false);
+			ssc.register(selector, SelectionKey.OP_ACCEPT);
 
-			while (connected)
-			{
-				String line = reader.readLine();
-				if (line == null)
-					connected = false;
-				else
-				{
-					System.out.println("Content" + clientSocket.getInetAddress() + ": " + line);
-					writer.write(pm.manage(line));
-					writer.flush();
+			while(true){
+				selector.select();
+				Set<SelectionKey> keys = selector.selectedKeys();
+				Iterator<SelectionKey> it = keys.iterator();
+
+				while (it.hasNext()){
+					SelectionKey key = (SelectionKey) it.next();
+
+					if (key.isAcceptable()){
+						Socket listen = server.accept();
+						SocketChannel sc = listen.getChannel();
+						sc.configureBlocking(false);
+						sc.register(selector, SelectionKey.OP_READ);
+					}
+
+					if(key.isReadable() && key.isValid()){
+						ByteBuffer bb = ByteBuffer.allocate(512);
+						SocketChannel st = (SocketChannel) key.channel();
+						int byteRead = st.read(bb);
+						bb.flip();
+						if (byteRead == -1){
+							key.cancel();
+							st.close();
+
+						}
+						else {
+							pm.handle(bb);
+							key.cancel();
+						}
+					}
 				}
-			}
-
-			System.out.println("Client disconnected.");
+				
+		System.out.println("Client disconnected.");
 		}
 		catch (IOException e)
 		{
