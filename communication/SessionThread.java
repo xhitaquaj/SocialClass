@@ -39,7 +39,7 @@ public class SessionThread extends Thread
 				else
 				{
 					System.out.println("Content" + clientSocket.getInetAddress() + ": " + line);
-					writer.write(pm.answer(line));
+					writer.write(pm.manage(line));
 					writer.flush();
 				}
 			}

@@ -88,13 +88,15 @@ public class Profile
 	public int isFriend(String name)
 	{
 		boolean b = false;
-		int i = -1;
+		int i = 0;
 		while (!b && i<friends.size())
 		{
-			i++;
 			b = (friends.get(i).getName().equals(name));
+			i++;
 		}
-		return i;
+		if (!b)
+			return -1;
+		return --i;
 	}
 	
 	public void loadFriends(String path)
