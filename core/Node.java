@@ -3,15 +3,15 @@ import java.net.*;
 
 public class Node
 {
-	private InetAddress ip;
+	private InetAddress host;
 	private int port;
 
 	public Node()
 	{
-		this.port = 4242;
+		this.port = 5234;
 		try
 		{
-			this.ip = InetAddress.getLocalHost();
+			this.host = InetAddress.getLocalHost();
 		}
 		catch (UnknownHostException e)
 		{
@@ -22,7 +22,7 @@ public class Node
 	public Node(InetAddress addr, int prt)
 	{
 		this.port = prt;
-		this.ip = addr;
+		this.host = addr;
 	}
 	
 	public int getPort()
@@ -30,8 +30,13 @@ public class Node
 		return this.port;
 	}
 	
-	public InetAddress getIP()
+	public InetAddress getHost()
 	{
-		return this.ip;
+		return this.host;
+	}
+
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 }

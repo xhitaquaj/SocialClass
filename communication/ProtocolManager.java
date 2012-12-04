@@ -1,5 +1,11 @@
 package communication;
 
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+import sun.util.calendar.BaseCalendar.Date;
+
 import core.*;
 
 public class ProtocolManager
@@ -16,7 +22,7 @@ public class ProtocolManager
 		return myNode;
 	}
 
-	public String manage(String query)
+	public static String manage(String query, int port)
 	{
 		int reqcode = Integer.parseInt(query.substring(0,2));
 		String req = query.substring(2);
@@ -25,8 +31,8 @@ public class ProtocolManager
 		{
 			if (req.split(":").length > 1)
 			{
-				handle(reqcode, req); //Another fonction = more clarity.
-				return "Tout s'est bien passé.";
+				handle(reqcode, req, Profile.mine.getFriends().get(numami)); //Another fonction = more clarity.
+				return "Hey !";
 			}
 			else
 				return "I don't understand sorry.\n";
@@ -37,16 +43,19 @@ public class ProtocolManager
 		}
 	}
 
-	private void handle(int reqcode, String req) {
+	private static void handle(int reqcode, String req, Profile sender) {
 		int s2 = reqcode%10;
 		switch((int) Math.floor(reqcode/10)){
 		case 1 :
 			switch(s2){
 			case 0 :
-				String thoughts = req;
+				Thought th = new Thought(req.split(":")[1]);
+				sender.addThought(thought);
 				break;
 			case 1 :
 				String comm = req;
+				
+				break;
 			}
 		case 2 :
 			switch(s2){
@@ -80,6 +89,29 @@ public class ProtocolManager
 		case 4 :
 			//pic
 			break;
+		}
+	}
+	private static void send(String thought, Profile sendto)
+	{
+		try
+		{
+			Socket s = new Socket(sendto.getNode().getHost().getHostAddress(), sendto.getNode().getPort());
+			OutputStream os = s.getOutputStream();
+			PrintStream ps = new PrintStream(os, false, "utf-8");
+				String name;
+			if(sendto.getName().equals("A"))
+				name = "B";
+			else 
+				name = "A";
+			ps.println("10"+name+":Bite");
+			Profile.check("");
+			ps.flush();
+			ps.close();
+			s.close();
+		}
+		catch (Exception e)
+		{
+			System.out.print(e.toString());
 		}
 	}
 }

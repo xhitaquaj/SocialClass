@@ -1,11 +1,12 @@
 package core;
 
-import java.util.Date;
+import java.util.*;
 
 public class Thought
 {
 	public String content;
 	public Date date;
+	private LinkedList<Thought> comList;
 	
 	public Thought(String content, Date date)
 	{
@@ -22,4 +23,15 @@ public class Thought
 	{
 		return this.content;
 	}
+	
+	public void addCom(Thought t)
+	{
+		this.comList.add(t);
+	}
+	
+	public LinkedList<Thought> getCom()
+	{
+		return this.comList;
+	}
+	
 }

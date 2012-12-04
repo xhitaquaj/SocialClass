@@ -29,12 +29,17 @@ public class Profile
 	
 	public String toString()
 	{
-		return name+", "+node.getIP();
+		return name+", "+node.getHost();
 	}
 
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	
+	public void addThought(Thought t)
+	{
+		thoughts.add(t);
 	}
 	
 	public void addThought(String message)
@@ -78,8 +83,7 @@ public class Profile
 		int i = 0;
 		while (!b && i<friends.size())
 		{
-			System.out.println(i+" "+friends.size()+" "+friends.get(i).getNode().getIP()+" "+node.getIP().toString());
-			b = (friends.get(i).getNode().getIP() == node.getIP());
+			b = (friends.get(i).getNode().getHost() == node.getHost());
 			i++;
 		}
 		return b;

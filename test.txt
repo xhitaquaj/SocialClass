@@ -1,1 +1,2 @@
-Aymeric:localhost:4242
+A:ophuls:5234
+B:pasolini:5234
