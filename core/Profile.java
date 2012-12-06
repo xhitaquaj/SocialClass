@@ -77,7 +77,7 @@ public class Profile
 		return node;
 	}
 	
-	public boolean isFriend(Node n)
+	public boolean getFriend(Node n)
 	{
 		boolean b = false;
 		int i = 0;
@@ -89,7 +89,7 @@ public class Profile
 		return b;
 	}
 	
-	public int isFriend(String name)
+	public int getFriend(String name)
 	{
 		boolean b = false;
 		int i = 0;
@@ -98,8 +98,10 @@ public class Profile
 			b = (friends.get(i).getName().equals(name));
 			i++;
 		}
-		if (!b)
+		if (mine.name.equals(name))
 			return -1;
+		if (!b)
+			return -2;
 		return --i;
 	}
 	
@@ -124,6 +126,9 @@ public class Profile
 
 	public static void check(String str) {
 		System.out.println("Check "+str);
-		
+			}
+
+	public Thought findThought(Date d) {
+		return null;		
 	}
 }

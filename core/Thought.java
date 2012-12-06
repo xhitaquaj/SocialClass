@@ -6,7 +6,7 @@ public class Thought
 {
 	public String content;
 	public Date date;
-	private LinkedList<Thought> comList;
+	protected LinkedList<Comm> comList;
 	
 	public Thought(String content, Date date)
 	{
@@ -24,12 +24,12 @@ public class Thought
 		return this.content;
 	}
 	
-	public void addCom(Thought t)
+	public void addCom(Comm t)
 	{
 		this.comList.add(t);
 	}
 	
-	public LinkedList<Thought> getCom()
+	public LinkedList<Comm> getComm()
 	{
 		return this.comList;
 	}
