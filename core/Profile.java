@@ -21,6 +21,29 @@ public class Profile
 		this.friends = new LinkedList<Profile>();
 		this.thoughts = new LinkedList<Thought>();
 	}
+	
+	public Profile(String name, InetAddress addr)
+	{
+		this.name = name;
+		this.node = new Node(addr);
+		this.friends = new LinkedList<Profile>();
+		this.thoughts = new LinkedList<Thought>();
+	}
+	
+	public Profile(String name, String addr)
+	{
+		this.name = name;
+		try 
+		{
+			this.node = new Node(addr);
+		} 
+		catch (UnknownHostException e) 
+		{
+			e.printStackTrace();
+		}
+		this.friends = new LinkedList<Profile>();
+		this.thoughts = new LinkedList<Thought>();
+	}
 
 	public String getName()
 	{
@@ -133,7 +156,7 @@ public class Profile
 		int i = 0;
 		while (!b && i<thoughts.size())
 		{
-			b = (thoughts.get(i).date.equals(d));
+			b = (Math.floor(thoughts.get(i).date.getTime()/1000) == Math.floor(d.getTime()/1000));
 			i++;
 		}
 		if (i < thoughts.size())
@@ -142,7 +165,7 @@ public class Profile
 		}
 		else
 		{
-			Thought t = new Thought("Ahahaha, ya eu une erreur quelque part là. Donc en fait, j'ai aucune raison de rire, POURQUOI JE RIS MOI ? *sobs*");
+			Thought t = new Thought("Ahahaha, ya eu une erreur quelque part la. Donc en fait, j'ai aucune raison de rire, POURQUOI JE RIS MOI ? *sobs*");
 			addThought(t);
 			return t;
 		}

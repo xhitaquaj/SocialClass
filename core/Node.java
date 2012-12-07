@@ -6,18 +6,20 @@ public class Node
 	private InetAddress host;
 	private int port;
 
-	public Node()
+	public Node() throws UnknownHostException
 	{
-		this.port = 5234;
-		try
-		{
-			this.host = InetAddress.getLocalHost();
-		}
-		catch (UnknownHostException e)
-		{
-		}
+		this(InetAddress.getLocalHost(), 5234);
 	}
 	
+	public Node(String str) throws UnknownHostException
+	{
+		this(InetAddress.getByName(str));
+	}
+	
+	public Node(InetAddress addr)
+	{
+		this(addr, 5234);
+	}
 		
 	public Node(InetAddress addr, int prt)
 	{
