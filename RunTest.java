@@ -1,13 +1,7 @@
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.nio.*;
-import java.nio.channels.*;
-import java.util.*;
-
 import communication.TestCom;
 
-import core.*;
+import core.Node;
+import core.Profile;
 
 public class RunTest {
 	

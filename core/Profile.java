@@ -129,6 +129,22 @@ public class Profile
 			}
 
 	public Thought findThought(Date d) {
-		return null;		
+		boolean b = false;
+		int i = 0;
+		while (!b && i<thoughts.size())
+		{
+			b = (thoughts.get(i).date.equals(d));
+			i++;
+		}
+		if (i < thoughts.size())
+		{
+			return thoughts.get(i);
+		}
+		else
+		{
+			Thought t = new Thought("Ahahaha, ya eu une erreur quelque part là. Donc en fait, j'ai aucune raison de rire, POURQUOI JE RIS MOI ? *sobs*");
+			addThought(t);
+			return t;
+		}
 	}
 }

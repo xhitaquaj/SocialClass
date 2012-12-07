@@ -1,19 +1,15 @@
 package communication;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.channels.Selector;
 import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
-import java.io.*;
-
-import core.Profile;
 
 
 public class Server {

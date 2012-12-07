@@ -1,17 +1,16 @@
 package communication;
 
-import java.io.*;
-import java.net.*;
-import java.text.DateFormat;
-import java.text.FieldPosition;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Locale;
 
-import sun.util.calendar.BaseCalendar.Date;
-
-import core.*;
+import core.Comm;
+import core.Node;
+import core.Profile;
+import core.Thought;
 
 public class ProtocolManager
 {
@@ -67,7 +66,11 @@ public class ProtocolManager
 				break;
 			case 1 :			//11s_username_&§&_s_date_&§&_c_username_&§&_c_commentaire 
 				Comm comm = new Comm(req[3], Profile.mine.getFriends().get(Profile.mine.getFriend(req[2])));
-				p.findThought(ew SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req[1])).addCom(comm);				
+				try {
+					p.findThought(new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req[1])).addCom(comm);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}				
 				break;
 			}
 		case 2 :
@@ -78,7 +81,7 @@ public class ProtocolManager
 			case 1 :			//21Sender_&§&_amis1_§§_amis2_&§&_{Statuts1_&&_commentaire1_&&_commentaire2_&&_...}{Status2_&&_.....} 
 				//friend request accepted
 				break;
-			case 2 :			//22Sender_&§&_amis1_§§_amis2_&§&_{_&&_Statuts1_&&_commentaire1_&&_
+			case 2 :			//22Sender_&§&_amis1_§§_amis2_&§&_{_&&_Statuts1_&&_commentaire1_&&_commentaire2_&&_..._&&_}...
 				//friend request refused
 				break;
 			case 3 :			//23Sender_&§&_adresse
@@ -95,7 +98,7 @@ public class ProtocolManager
 				//asking thoughts
 				break;
 			case 1 :			//31Sender_&§&_{_&&_Statuts1_&&_commentaire1_&&_commentaire2_&&_..._&&_}{_&&_Status2_&&_....._&&_} 
-				//sending thought
+				//sending thoughts
 				break;
 			}
 			break;
@@ -104,6 +107,7 @@ public class ProtocolManager
 			break;
 		}
 	}
+	@SuppressWarnings("unused")
 	private static void send(String thought, Profile sendto)
 	{
 		try
