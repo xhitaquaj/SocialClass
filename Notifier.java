@@ -11,15 +11,16 @@ public class Notifier {
 		    while(enum.hasMoreElements()) {  
 			Object obj = enum.nextElement();  
 			System.out.println(obj + ": " + paramTable.get(obj));  
-        }  
+		    }  
 		}  
-    });
-	Listener requestListener = new Listener(){
-		public void requested(Event e){
+		/*
+		  
+		  Listener requestListener = new Listener(){
+		  public void requested(Event e){
 		    AddFriendRequest.pop(notif.get("name"));
 		}
 	    }	
 	    notif.addListener(requestListener);
-    }
+	    }*/
     
 }
