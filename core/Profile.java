@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.*;
 import java.util.LinkedList;
 
-public class Profile
+public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 {
 	public static Profile mine;
 	
@@ -100,19 +100,7 @@ public class Profile
 		return node;
 	}
 	
-	public boolean getFriend(Node n)
-	{
-		boolean b = false;
-		int i = 0;
-		while (!b && i<friends.size())
-		{
-			b = (friends.get(i).getNode().getHost() == node.getHost());
-			i++;
-		}
-		return b;
-	}
-	
-	public int getFriend(String name)
+	public int getFriend(String name)		//Permet de retourner un Profile d'un ami en indiquant seulement son nom.
 	{
 		boolean b = false;
 		int i = 0;
@@ -128,7 +116,19 @@ public class Profile
 		return --i;
 	}
 	
-	public void loadFriends(String path)
+	public boolean getFriend(Node n)		//cf getFriend(String name) mais en passant un Node a la place.
+	{
+		boolean b = false;
+		int i = 0;
+		while (!b && i<friends.size())
+		{
+			b = (friends.get(i).getNode().getHost() == node.getHost());
+			i++;
+		}
+		return b;
+	}
+	
+	public void loadFriends(String path)	//Fonction recuperant les amis et créant leur profil à partir d'un fichier externe.
 	{
 		try{
 			InputStream ips=new FileInputStream(path); 
@@ -147,11 +147,11 @@ public class Profile
 		}
 	}
 
-	public static void check(String str) {
+	public static void check(String str) {		//Fonction de debuggage parce que OUI j'ai la flemme de taper System.out.println("check") quand je veux tester.
 		System.out.println("Check "+str);
 			}
 
-	public Thought findThought(Date d) {
+	public Thought findThought(Date d) {		//Essentielle a l'ajout de commentaires, permet de retrouver un statut parmi les statuts postes par le Profile a partir de la date de celui-ci.
 		boolean b = false;
 		int i = 0;
 		while (!b && i<thoughts.size())

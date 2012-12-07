@@ -1,7 +1,7 @@
 package core;
 import java.net.*;
 
-public class Node
+public class Node		//Contient les informations "techniques" du contact.
 {
 	private InetAddress host;
 	private int port;
