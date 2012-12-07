@@ -2,7 +2,7 @@ package core;
 
 import java.util.*;
 
-public class Thought
+public class Thought			//Gere les statuts et commentaires.
 {
 	public String content;
 	public Date date;

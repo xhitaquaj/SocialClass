@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-public class Server {
+public class Server {				//Gestion via SelectThread
 
 	public static final int port = 5234;
 
@@ -58,7 +58,7 @@ public class Server {
 							byte[] buff = new byte[bb.remaining()];
 							bb.get(buff);
 							String data = new String(buff);
-							ProtocolManager.manage(data, st.socket().getPort());
+							ProtocolManager.manage(data);
 							key.cancel();
 						}
 					}

@@ -3,8 +3,8 @@ package core;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class Comm extends Thought {
-	
+public class Comm extends Thought {		//Classe commentaires herite de Thought
+										//Donc possibilite dans le futur de Commentaires sur Commentaires.
 	private Profile owner;
 	
 	public Comm(String content, Date date, Profile owner)
@@ -24,14 +24,5 @@ public class Comm extends Thought {
 		return ("["+this.date.toString()+""+this.owner.toString()+" : "+this.content);
 	}
 	
-	public void addCom(Comm t)
-	{
-		this.comList.add(t);
-	}
-	
-	public LinkedList<Comm> getComm()
-	{
-		return this.comList;
-	}
 
 }
