@@ -14,7 +14,8 @@ CLASSES = \
 	gui/Friend.java \
 	gui/JavaFXClient.java \
 	gui/AddFriendPopup.java \
-	gui/Timeline.java	
+	gui/Timeline.java \
+	gui/Bindings.java	
 
 default: classes
 

@@ -70,7 +70,8 @@ public class Bindings {
 		public void changed (ObservableValue<?extends Number> observable,
 				     Number oldVal, Number newVal){
 		    Double width = (Double) newVal;
-		    dst.setLayoutX(width+50);
+		    dst.setLayoutX(width+100);
+		    dst.setLayoutY(70);
 		}
 	    });
     }

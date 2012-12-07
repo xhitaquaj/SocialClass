@@ -46,7 +46,7 @@ public class JavaFXClient extends Application {
 	Friend f=new Friend(friendlist.stack());
 	friendlist.addFriend(friend);
 	friendlist.addFriend(f);
-	Timeline t = new Timeline(friendlist);
+	Timeline t = new Timeline(friendlist,root);
 	root.getChildren().addAll(friendlist.stack(), friendlist.scroll(),t.field());
 
 	stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

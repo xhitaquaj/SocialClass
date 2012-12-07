@@ -52,7 +52,7 @@ public class FriendsList extends Parent{
     private void initializeStack(){
 	stack = new VBox();
 	stack.setLayoutY(50);
-	stack.setLayoutX(30);
+	stack.setLayoutX(20);
     }
 
     private void initializeScroll(){
