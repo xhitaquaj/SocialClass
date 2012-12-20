@@ -58,7 +58,8 @@ public class Server {				//Gestion via SelectThread
 							byte[] buff = new byte[bb.remaining()];
 							bb.get(buff);
 							String data = new String(buff);
-							ProtocolManager.manage(data);
+							int reqcode = Integer.parseInt(data.substring(0,2));
+							Protocole.treatmentProtocol(reqcode, data.substring(2));
 							key.cancel();
 						}
 					}

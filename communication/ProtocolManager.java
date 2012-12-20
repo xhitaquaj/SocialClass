@@ -44,14 +44,14 @@ public class ProtocolManager
 				if(numami==-1)
 					handle(reqcode, req.split(sep), Profile.mine);
 				handle(reqcode, req.split(sep), Profile.mine.getFriends().get(numami));	//Another fonction = more clarity.
-				return "Hey !";
+				return "SUCCESS\n";
 			}
 			else
-				return "I don't understand sorry.\n";
+				return "Pas d'arguments.\n";
 		}
 		else
 		{
-			return "T'ES PAS MON COPAIN.";
+			return "T'ES PAS MON COPAIN.\n";
 		}
 	}
 
@@ -63,7 +63,7 @@ public class ProtocolManager
 			case 0 :			//LISTEN TO ME							- 10Sender_&§&_date_&§&_status
 				Thought th;
 				try {
-					th = new Thought(req[2], new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH).parse(req[1]));
+					th = new Thought(req[2], new SimpleDateFormat("yyyy MM dd HH:mm:ss", Locale.ENGLISH).parse(req[1]));
 					p.addThought(th);
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -123,7 +123,7 @@ public class ProtocolManager
 			switch(s2){
 				case 0:			//the computer turned on by itself and took a photo ok i'm not a model
 					break;
-				case 2:			//Header de test entre deux machines s'envoyant un mot en boucle.
+				case 2:			//Ping pong.
 					String name;
 					if(p.getName().equals("A"))
 						name = "B";
