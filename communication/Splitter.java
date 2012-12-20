@@ -39,7 +39,8 @@ public class Splitter {
 	{
 		Hashtable<String, String> table = new Hashtable<String, String>();
 		table.put("Name", data.split(sep)[0]);
-		table.put("Status", data.split(sep)[1]);
+		table.put("Date", data.split(sep)[1]);
+		table.put("Status", data.split(sep)[2]);
 		return table;
 	}
 	

@@ -128,6 +128,17 @@ public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 		return b;
 	}
 	
+	public boolean getFriend(InetAddress host)		//cf getFriend(Node n) mais en passant un InetAddress a la place.
+	{
+		return getFriend(new Node(host));
+	}
+	
+	public Profile getFriend(int index)
+	{
+		Profile p = friends.get(index);
+		return p;
+	}
+	
 	public void loadFriends(String path)	//Fonction recuperant les amis et créant leur profil à partir d'un fichier externe.
 	{
 		try{

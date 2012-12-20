@@ -37,8 +37,11 @@ public class Node		//Contient les informations "techniques" du contact.
 		return this.host;
 	}
 
-
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	public void setHost(InetAddress host) {
+		this.host = host;
 	}
 }
