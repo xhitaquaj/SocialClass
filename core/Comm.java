@@ -1,7 +1,6 @@
 package core;
 
 import java.util.Date;
-import java.util.LinkedList;
 
 public class Comm extends Thought {		//Classe commentaires herite de Thought
 										//Donc possibilite dans le futur de Commentaires sur Commentaires.

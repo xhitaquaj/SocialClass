@@ -1,16 +1,10 @@
 package communication;
 
-import java.awt.Image;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Locale;
 
 import core.Comm;
 import core.Node;
@@ -173,7 +167,7 @@ public class Protocole {
 		//TODO Voir le systme de notifications.
 		if (reqcode != 99)
 			return false;
-		Hashtable<String, String> dataTable = Splitter.errorMessage(dataReceived);
+//		Hashtable<String, String> dataTable = Splitter.errorMessage(dataReceived);
 		return true;
 	}
 

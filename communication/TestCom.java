@@ -1,8 +1,5 @@
 package communication;
 
-import java.net.*;
-
-import core.Profile;
 
 public class TestCom			//Classe de test.
 {
