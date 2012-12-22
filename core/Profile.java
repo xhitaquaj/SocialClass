@@ -1,6 +1,7 @@
 package core;
 
 import java.util.Date;
+import java.awt.Image;
 import java.io.*;
 import java.net.*;
 import java.util.LinkedList;
@@ -13,6 +14,8 @@ public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 	private LinkedList<Thought> thoughts;
 	private LinkedList<Profile> friends;
 	private Node node;
+	private boolean closeFriend;
+	private Image profilePic; 
 	
 	public Profile(String name, Node node)
 	{
@@ -100,7 +103,7 @@ public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 		return node;
 	}
 	
-	public int getFriend(String name)		//Permet de retourner un Profile d'un ami en indiquant seulement son nom.
+	public int getFriendIndex(String name)		//Permet de retourner un Profile d'un ami en indiquant seulement son nom.
 	{
 		boolean b = false;
 		int i = 0;
@@ -116,7 +119,7 @@ public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 		return --i;
 	}
 	
-	public boolean getFriend(Node n)		//cf getFriend(String name) mais en passant un Node a la place.
+	public boolean getFriendIndex(Node n)		//cf getFriend(String name) mais en passant un Node a la place.
 	{
 		boolean b = false;
 		int i = 0;
@@ -128,9 +131,9 @@ public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 		return b;
 	}
 	
-	public boolean getFriend(InetAddress host)		//cf getFriend(Node n) mais en passant un InetAddress a la place.
+	public boolean getFriendIndex(InetAddress host)		//cf getFriend(Node n) mais en passant un InetAddress a la place.
 	{
-		return getFriend(new Node(host));
+		return getFriendIndex(new Node(host));
 	}
 	
 	public Profile getFriend(int index)
@@ -180,5 +183,21 @@ public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 			addThought(t);
 			return t;
 		}
+	}
+	
+	public boolean isCloseFriend() {
+		return closeFriend;
+	}
+
+	public void setCloseFriend(boolean closeFriend) {
+		this.closeFriend = closeFriend;
+	}
+
+	public Image getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(Image profilePic) {
+		this.profilePic = profilePic;
 	}
 }

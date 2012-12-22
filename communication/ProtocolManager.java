@@ -36,7 +36,7 @@ public class ProtocolManager
 	{
 		int reqcode = Integer.parseInt(query.substring(0,2));
 		String req = query.substring(2);
-		int numami = Profile.mine.getFriend(req.split(sep)[0]);
+		int numami = Profile.mine.getFriendIndex(req.split(sep)[0]);
 		if(numami>-2)
 		{
 			if (req.split(sep).length > 1)
@@ -70,7 +70,7 @@ public class ProtocolManager
 				}
 				break;
 			case 1 :			//I'M GONNA TALK ABOUT YOU TALKING		- 11s_username_&§&_s_date_&§&_c_username_&§&_c_commentaire 
-				Comm comm = new Comm(req[3], Profile.mine.getFriends().get(Profile.mine.getFriend(req[2])));
+				Comm comm = new Comm(req[3], Profile.mine.getFriends().get(Profile.mine.getFriendIndex(req[2])));
 				try {
 					p.findThought(new SimpleDateFormat("yyyy MM dd HH:mm:ss", Locale.ENGLISH).parse(req[1])).addCom(comm);
 				} catch (ParseException e) {
@@ -98,7 +98,7 @@ public class ProtocolManager
 					}
 					for (i = 0; i < thoughts[i].split(sep3).length; i++)
 					{
-						t.addCom(new Comm(thoughts[i].split(sep3)[i].split(sep4)[0], p.getFriends().get(p.getFriend(thoughts[i].split(sep3)[i].split(sep4)[1]))));
+						t.addCom(new Comm(thoughts[i].split(sep3)[i].split(sep4)[0], p.getFriends().get(p.getFriendIndex(thoughts[i].split(sep3)[i].split(sep4)[1]))));
  					}
 				}
 				Profile.mine.addFriend(p);

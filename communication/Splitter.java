@@ -30,9 +30,11 @@ public class Splitter {
 	}
 	
 	/**
+	 * Handles text status and picture status.
 	 * @param data - Formatted String containing all the data to be extracted.
 	 * @return Hashtable<String, String> containing the data.<br />
 	 *  - Username			-> key "Name"<br />
+	 *  - Status date 		-> key "Date"<br />
 	 *  - Status content	-> key "Status"
 	 */
 	public static Hashtable<String, String> status(String data)
@@ -58,7 +60,8 @@ public class Splitter {
 		table.put("StatusName", data.split(sep)[0]);
 		table.put("StatusDate", data.split(sep)[1]);
 		table.put("CommentName", data.split(sep)[2]);
-		table.put("Comment", data.split(sep)[1]);
+		table.put("CommentDate", data.split(sep)[3]);
+		table.put("Comment", data.split(sep)[4]);
 		return table;
 	}
 	
@@ -101,6 +104,7 @@ public class Splitter {
 	}
 	
 	/**
+	 * Only useful for profile pictures. Status pictures are to be passed through Splitter.status(String data).
 	 * @param data - Formatted String containing all the data to be extracted.
 	 * @return Hashtable<String, String> containing the data.<br />
 	 *  - Username		-> key "Name"<br />
@@ -122,6 +126,7 @@ public class Splitter {
 	public static Hashtable<String, String> errorMessage(String data)
 	{
 		Hashtable<String, String> table = new Hashtable<String, String>();
+		table.put("Error", data);
 		return table;
 	}
 }
