@@ -91,17 +91,49 @@ public class Protocole {
 	private static boolean friendRequest(int reqcode, String dataReceived){
 		if (reqcode != 20)
 			return false;
-		Hashtable<String, String> dataTable = Splitter.friendRequest(dataReceived);
 		
+		Hashtable<String, String> dataTable = Splitter.friendRequest(dataReceived);
 		String friendName = dataTable.get("NewFriendName");
+		int index;
+		Profile p;
+		Profile newFriend;
 		try {
-			Profile newFriend = new Profile(friendName, new Node(InetAddress.getByName(dataTable.get("NewFriendHost"))));
+			newFriend = new Profile(dataTable.get(friendName), new Node(InetAddress.getByName(dataTable.get("NewFriendHost"))));
+			for(int ami = 0; ami < Profile.mine.getFriends().size(); ami++)
+			{
+				p = Profile.mine.getFriend(ami);
+				index = p.getFriendIndex(friendName);
+				if(index > -1)
+					p = Profile.mine.getFriend(ami).getFriend(index);
+				if(index > -2)
+				{
+					newFriend = p; 
+					break;
+				}
+			}
 			for(int i=1; i<dataTable.size(); i++)
 			{
-				newFriend.addFriend(new Profile(dataTable.get("Friend"+i+"Name"), new Node(InetAddress.getByName(dataTable.get("Friend"+i+"Host")))));	
+				String friendOfAFriend = "Friend"+i+"Name";
+				for(int ami = 0; ami < Profile.mine.getFriends().size(); ami++)
+				{
+					p = Profile.mine.getFriend(ami);
+					index = p.getFriendIndex(friendOfAFriend);
+					if(index > -1)
+						p = Profile.mine.getFriend(ami).getFriend(index);
+					if(index > -2)
+					{
+						newFriend.addFriend(p); 
+						break;
+					}
+				}
+				if (Profile.mine.getFriendIndex(friendOfAFriend)==-1)
+					newFriend.addFriend(Profile.mine);
+				else
+					newFriend.addFriend(new Profile(friendOfAFriend, new Node(InetAddress.getByName(dataTable.get("Friend"+i+"Host")))));
 			}
 			Profile.mine.addFriend(newFriend);
 		} catch (UnknownHostException e) { e.printStackTrace();	}
+		//TODO Faire ajouter une notification pour que l'interface puisse gérer l'évènement.
 		return true;
 	}
 
@@ -137,11 +169,13 @@ public class Protocole {
 		return true;
 	}
 
-	private static Image conversionStrtoPic(String string) { //Pour l'instant non-fonctionnelle. TODO Voir comment covertir images -> string et ice-versa.
+	private static Image conversionStrtoPic(String string) { //Pour l'instant non-fonctionnelle.
+		//TODO Voir comment covertir images -> string et ice-versa.
 		return null;
 	}
 
-	private static boolean errorMessage(int reqcode, String dataReceived){ //TODO A traiter une fois ObservableHashtable bien mise en place.
+	private static boolean errorMessage(int reqcode, String dataReceived){ 
+		//TODO Voir le systme de notifications.
 		if (reqcode != 99)
 			return false;
 		Hashtable<String, String> dataTable = Splitter.errorMessage(dataReceived);
