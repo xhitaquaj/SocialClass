@@ -1,10 +1,11 @@
 package core;
 
 import java.util.Date;
-import java.awt.Image;
 import java.io.*;
 import java.net.*;
 import java.util.LinkedList;
+
+import javafx.scene.image.Image;
 
 public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 {
@@ -197,7 +198,7 @@ public class Profile						//Informations (Status/Nom/Amis/...) sur l'ami.
 		return profilePic;
 	}
 
-	public void setProfilePic(Image profilePic) {
-		this.profilePic = profilePic;
+	public void setProfilePic(Image image) {
+		this.profilePic = image;
 	}
 }

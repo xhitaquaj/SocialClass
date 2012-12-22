@@ -9,10 +9,8 @@ import java.util.*;
  * @author aquaj
  * 
  */
-public class Splitter {
+public class Splitter extends StringManagement {
 	
-	public static final String sep = "##";
-
 	private Splitter(){}
 
 	/**
@@ -52,6 +50,7 @@ public class Splitter {
 	 *  - Username of the poster of commented status	-> key "StatusName"<br />
 	 *  - Status date of publication					-> key "StatusDate"<br />
 	 *  - Username of comment poster					-> key "CommentName"<br />
+	 *  - Date of publication of comment 				-> key "CommentDate"<br />
 	 *  - Content of the comment 						-> key "Comment"
 	 */
 	public static Hashtable<String, String> comment(String data)

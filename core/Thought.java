@@ -6,6 +6,7 @@ public class Thought			//Gere les statuts et commentaires.
 {
 	public String content;
 	public Date date;
+	public boolean isPublic;
 	protected LinkedList<Comm> comList;
 	
 	public Thought(String content, Date date)

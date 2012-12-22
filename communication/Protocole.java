@@ -40,7 +40,7 @@ public class Protocole {
 
 			if(errorMessage(reqcode, dataReceived)) break;
 
-			sendErrorMessage("42 Poyo", Profile.mine);
+			Sender.sendErrorMessage("42 Poyo", Profile.mine);
 			break;
 		}
 	}
@@ -51,7 +51,7 @@ public class Protocole {
 		Hashtable<String, String> dataTable = Splitter.connect(dataReceived);
 		int i = Profile.mine.getFriendIndex(dataTable.get("Name"));
 		if (i < 0)
-			sendErrorMessage("Vous n'êtes pas mon ami monsieur. Lâchez ma veste.", new Profile("Monsieur", dataTable.get("Host")));
+			Sender.sendErrorMessage("Vous n'êtes pas mon ami monsieur. Lâchez ma veste.", new Profile("Monsieur", dataTable.get("Host")));
 		else
 			try {
 				Profile.mine.getFriend(i).getNode().setHost(InetAddress.getByName(dataTable.get("Host")));
@@ -66,10 +66,10 @@ public class Protocole {
 		Hashtable<String, String> dataTable = Splitter.status(dataReceived);
 		int i = Profile.mine.getFriendIndex(dataTable.get("Name"));
 		if (i < 0)
-			sendErrorMessage("Vous n'êtes pas mon ami monsieur. Lâchez ma veste.", new Profile("Monsieur", dataTable.get("Host")));
+			Sender.sendErrorMessage("Vous n'êtes pas mon ami monsieur. Lâchez ma veste.", new Profile("Monsieur", dataTable.get("Host")));
 		else
 			try {
-				Profile.mine.getFriend(i).addThought(dataTable.get("Status"), new SimpleDateFormat("yyyy MM dd HH:mm:ss", Locale.ENGLISH).parse(dataTable.get("Date")));
+				Profile.mine.getFriend(i).addThought(dataTable.get("Status"), StringManagement.df.parse(dataTable.get("Date")));
 			} catch (Exception e) { e.printStackTrace(); }
 		return true;
 	}
@@ -80,8 +80,8 @@ public class Protocole {
 		Hashtable<String, String> dataTable = Splitter.comment(dataReceived);
 		try {
 			Profile statusPoster = Profile.mine.getFriend(Profile.mine.getFriendIndex(dataTable.get("StatusName")));
-			Date postDate = new SimpleDateFormat("yyyy MM dd HH:mm:ss", Locale.ENGLISH).parse(dataTable.get("StatusDate"));
-			Date commentDate = new SimpleDateFormat("yyyy MM dd HH:mm:ss", Locale.ENGLISH).parse(dataTable.get("CommentDate"));
+			Date postDate = StringManagement.df.parse(dataTable.get("StatusDate"));
+			Date commentDate = StringManagement.df.parse(dataTable.get("CommentDate"));
 			Comm comment = new Comm(dataTable.get("Comment"), commentDate, Profile.mine.getFriend(Profile.mine.getFriendIndex(dataTable.get("CommentName"))));
 			statusPoster.findThought(postDate).addCom(comment);
 		} catch (ParseException e) { e.printStackTrace(); }
@@ -165,13 +165,8 @@ public class Protocole {
 		if (reqcode != 41)
 			return false;
 		Hashtable<String, String> dataTable = Splitter.image(dataReceived);
-		Profile.mine.getFriend(Profile.mine.getFriendIndex(dataTable.get("Name"))).setProfilePic(conversionStrtoPic(dataTable.get("Image")));
+		Profile.mine.getFriend(Profile.mine.getFriendIndex(dataTable.get("Name"))).setProfilePic(StringManagement.strtoPic(dataTable.get("Image")));
 		return true;
-	}
-
-	private static Image conversionStrtoPic(String string) { //Pour l'instant non-fonctionnelle.
-		//TODO Voir comment covertir images -> string et ice-versa.
-		return null;
 	}
 
 	private static boolean errorMessage(int reqcode, String dataReceived){ 
@@ -180,28 +175,6 @@ public class Protocole {
 			return false;
 		Hashtable<String, String> dataTable = Splitter.errorMessage(dataReceived);
 		return true;
-	}
-
-	private static void sendErrorMessage(String error, Profile sendto){
-		send(99, error, sendto);
-	}
-
-	private static void send(int reqcode, String req, Profile sendto)	//Fonction qui va envoyer [reqcode]+[req] à l'user sendto
-	{
-		try
-		{
-			Socket s = new Socket(sendto.getNode().getHost().getHostAddress(), sendto.getNode().getPort());
-			OutputStream os = s.getOutputStream();
-			PrintStream ps = new PrintStream(os, false, "utf-8");
-			ps.println(reqcode+req);
-			ps.flush();
-			ps.close();
-			s.close();
-		}
-		catch (Exception e)
-		{
-			System.out.print(e.toString());
-		}
 	}
 
 }
