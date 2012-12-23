@@ -15,7 +15,7 @@ import core.*;
  */
 public class Sender extends StringManagement {
 	
-	private Sender(){};
+	protected Sender(){};
 	
 	public static void connexion(Profile sendto)
 	{
@@ -57,7 +57,14 @@ public class Sender extends StringManagement {
 		{
 			Thought t = Profile.mine.getThoughts().get(i);
 			if (t.isPublic)
+			{
 				sendStatus(t, sendto);
+				for(int c = 0; c < t.getComm().size(); c++)
+				{
+					Comm com = t.getComm().get(c);
+					sendComment(Profile.mine, com, t, sendto);
+				}
+			}
 			else if (answer)
 				sendStatus(t, sendto);
 		}
