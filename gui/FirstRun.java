@@ -1,26 +1,18 @@
 package gui;
 
-import javafx.scene.control.TextField;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.Label;
-import javafx.scene.Scene;
-import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.control.Button;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
+import javafx.scene.Parent;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
 
-public class AddFriendPopup {
+public class FirstRun{
 
-    public static void pop(){
+ public static void pop(){
 	final Stage popup = new Stage();
 	Group gr = new Group();
-	Scene scene = new Scene(gr,320,100);//fenetre
+	Scene scene = new Scene(gr, 320, 100);//fenetre
         scene.setFill(Color.GREY);
         popup.setScene(scene);
-        popup.setTitle("Ajouter Nouvel Ami");
+        popup.setTitle("Ajouter Mon Compte");
      	
 	//HBox box = new HBox();
 	//box.getChildren().add(new Label("In popup..."));
@@ -35,7 +27,8 @@ public class AddFriendPopup {
     }
 
     private static Label adressField(){
-	Label l = new Label("Ajouter Adresse");
+	Label l = new Label("Repertoire de la Photo de profil");
+	HBox.setHgrow(l, Priority.ALWAYS);
 	return l;
     }
 
@@ -44,13 +37,8 @@ public class AddFriendPopup {
 	return txt;
     }
 
-    private static String getAdressEntry(TextField txt){
+    private static String getPhoto(TextField txt){
 	return txt.getCharacters().toString();    
-    }
-
-    private static Friend newFriend(FriendsList l, String name, String image,String status){
-	Friend f = new Friend(l.stack(),name,image,status);
-	return f;
     }
 
     private static Button confirmButton(){
@@ -75,5 +63,4 @@ public class AddFriendPopup {
 	    });
 	return bt;
     }
-
 }

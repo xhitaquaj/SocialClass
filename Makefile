@@ -2,7 +2,7 @@ JFLAGS = -g
 
 JC = javac
 
-CLASSPATH=/usr/java/jdk1.7.0_09/jre/lib/jfxrt.jar:.
+CLASSPATH=./gui/jfxrt.jar:.
 
 .SUFFIXES: .java .class
 

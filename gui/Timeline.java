@@ -1,12 +1,11 @@
 package gui;
 
-import javafx.util.Duration;
+import java.util.*;
+import javafx.util.*;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Parent;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.paint.Color;
@@ -14,58 +13,86 @@ import javafx.scene.Group;
 
 public class Timeline extends Parent {
 
+    private List<Label> posts;
     private VBox field;
-    private Button post_button;
-    private TextField post_entry;
+    private Button postButton;
+    private TextField postEntry;
 
-    public Timeline(FriendsList l,Group root){
-		
+    public Timeline(HBox hbox){		
+	posts = new ArrayList<Label>();
 	initializePostEntry();
 	initializePostButton();
 	initializeField();
-	loadContent(root,l);
-	Bindings.adjust(l.stack(),field); 
+	loadContent(hbox);
+	//	Bindings.adjust(l.stack(),field); 
     }
+
     public VBox field(){
 	return field;
     }
+
     private void initializeField(){
-	field = new VBox();
+	field = new VBox(10);//espace entre les fils
     }
+
     private void initializePostEntry(){
-	post_entry = new TextField();
-	
+	postEntry = new TextField();
+	postEntry.setPromptText("Type here");
+	postEntry.setPrefWidth(200);	
     }
+
     private void setTransition(Label l){
 	ScaleTransition transition = new ScaleTransition(Duration.millis(2000),l);
-	transition.setFromX(0.5);
-	transition.setFromY(0.5);
-	transition.setToX(1.5);
-	transition.setToY(1.5);
+	transition.setFromX(0.1);
+	transition.setFromY(0.1);
+	transition.setToX(1);
+	transition.setToY(1);
 	transition.setCycleCount(1);
 	transition.setAutoReverse(true);
 	transition.play();
     }
+
     private void initializePostButton(){
-	post_button = new Button("Post");
-	post_button.setStyle("-fx-background-color: cyan;");
-	post_button.setOnAction(new EventHandler<ActionEvent>(){
+	postButton = new Button("Post");
+	postButton.setPrefWidth(100);
+	postButton.setStyle("-fx-background-color: cyan;");
+	postButton.setOnAction(new EventHandler<ActionEvent>(){
 		@Override public void handle(ActionEvent e){
-		    Label l = new Label(post_entry.getCharacters().toString());
-		    l.setMinWidth(100);
-		    l.setTextFill(Color.GREEN);
-		    //l.setStyle("-fx-border-color:white;");
-		    field.getChildren().add(l);
-		    setTransition(l);
+		    addPost();
 		}
 	    });
     }
-    private void loadContent(Group root,FriendsList l){
-	post_button.setLayoutY(20);
-	post_entry.setLayoutY(0);
-	post_button.setLayoutX(200);
-	post_entry.setLayoutX(200);
-	root.getChildren().add(post_entry);
-	root.getChildren().add(post_button);
+
+    private void addPost(){
+	String p = postEntry.getCharacters().toString();
+	if (!p.trim().isEmpty()){
+	    int s = posts.size();
+	    posts.add(new Label());
+	    Label l = posts.get(0);
+	    for(int i = s; i > 0; i--){
+		posts.get(i).setText(posts.get(i-1).getText());
+	    }
+	    l.setText(p);
+	    l.setMinWidth(100);
+	    l.setTextFill(Color.GREEN);
+	    //l.setStyle("-fx-border-color:white;");
+	    field.getChildren().add(posts.get(s));
+	    setTransition(l);
+	}
+	postEntry.clear();
+    }
+
+    //private void movePosts
+
+    private void loadContent(HBox hbox){
+	/*postButton.setLayoutY(20);
+	postEntry.setLayoutY(10);
+	postButton.setLayoutX(200);
+	postEntry.setLayoutX(200);*/
+	//	HBox.setHgrow(field, Priority.ALWAYS);
+	//VBox.setVgrow(field, Priority.ALWAYS);
+	field.getChildren().add(postEntry);
+	field.getChildren().add(postButton);
+	hbox.getChildren().add(field);	
     }
 }

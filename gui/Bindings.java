@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.stage.Stage;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -31,8 +32,8 @@ public class Bindings {
 		    vb.setMaxWidth(width);
 		    vb.setMinWidth(width);
 		    b.setPrefWidth(width);
-		    b.setMinWidth(width);
-		    b.setMaxWidth(width);
+		    //b.setMinWidth(width);
+		    //b.setMaxWidth(width);
 		}
 	    });
 }
